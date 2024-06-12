@@ -1,4 +1,5 @@
 <h2>master-detail works!</h2>
 
-<app-list [cvs]="cvsList" />
+<app-list (forwardCv)="onSelectCv($event)" [cvs]="cvsList" />
 <!-- appList(cvList) -->
+<router-outlet />
