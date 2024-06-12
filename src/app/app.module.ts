@@ -49,6 +49,13 @@ import { ProductsComponent } from "./products/products.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component";
 import { SliderComponent } from "./rxjs/slider/slider.component";
+import { helperProviderFactory } from "./provider factory/helper.provider-factory";
+import { HELPER_INJECTION_TOKEN } from "./injection tokens/helper.injection-token";
+import { HelperService } from "./services/helper.service";
+import { LoggerService } from "./services/logger.service";
+import { CONSTANTES } from "../config/const.config";
+import { CvService } from "./cv/services/cv.service";
+import { FakeCvService } from "./cv/services/fakeCv.service";
 
 @NgModule({
   declarations: [
@@ -105,7 +112,21 @@ import { SliderComponent } from "./rxjs/slider/slider.component";
       registrationStrategy: "registerWhenStable:30000",
     }),
   ],
-  providers: [AuthInterceptorProvider],
+  providers: [
+    AuthInterceptorProvider,
+    HelperService,
+    {
+      provide: CvService,
+      useClass: CONSTANTES.env === "dev" ? FakeCvService : CvService,
+    },
+    /* {
+      // provide: HELPER_INJECTION_TOKEN,
+      provide: HelperService,
+      // useFactory: helperProviderFactory,
+      useClass: HelperService,
+      // deps: [LoggerService],
+    }, */
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
