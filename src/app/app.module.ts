@@ -59,6 +59,8 @@ import { FakeCvService } from "./cv/services/fakeCv.service";
 import { Helper2Service } from "./services/helper2.service";
 import { v4 as uuidv4 } from "uuid";
 import { UUID_TOKEN } from "./injection tokens/uuid.inject-token";
+import { WeekTodoComponent } from './todo/week-todo/week-todo.component';
+import { MasterDetailComponent } from './cv/master-detail/master-detail.component';
 // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 @NgModule({
   declarations: [
@@ -99,6 +101,8 @@ import { UUID_TOKEN } from "./injection tokens/uuid.inject-token";
     RhComponent,
     UserListComponent,
     ProductsComponent,
+    WeekTodoComponent,
+    MasterDetailComponent,
   ],
   imports: [
     BrowserModule,
