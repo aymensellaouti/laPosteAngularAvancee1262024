@@ -58,6 +58,7 @@ import { CvService } from "./cv/services/cv.service";
 import { FakeCvService } from "./cv/services/fakeCv.service";
 import { Helper2Service } from "./services/helper2.service";
 import { v4 as uuidv4 } from "uuid";
+import { UUID_TOKEN } from "./injection tokens/uuid.inject-token";
 // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 @NgModule({
   declarations: [
@@ -131,6 +132,10 @@ import { v4 as uuidv4 } from "uuid";
       provide: HelperService,
       useClass: Helper2Service,
       multi: true,
+    },
+    {
+      provide: UUID_TOKEN,
+      useValue: uuidv4,
     },
     /* {
       // provide: HELPER_INJECTION_TOKEN,

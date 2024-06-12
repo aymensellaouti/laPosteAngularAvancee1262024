@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, inject, Inject } from "@angular/core";
 import { Cv } from "../model/cv";
 import { LoggerService } from "../../services/logger.service";
 import { ToastrService } from "ngx-toastr";
@@ -6,6 +6,7 @@ import { CvService } from "../services/cv.service";
 import { EMPTY, Observable, catchError, of } from "rxjs";
 import { HELPER_INJECTION_TOKEN } from "../../injection tokens/helper.injection-token";
 import { HelperService } from "../../services/helper.service";
+import { TodoService } from "../../todo/service/todo.service";
 @Component({
   selector: "app-cv",
   templateUrl: "./cv.component.html",
@@ -16,7 +17,7 @@ export class CvComponent {
   selectedCv: Cv | null = null;
   /*   selectedCv: Cv | null = null; */
   date = new Date();
-
+  todoService = inject(TodoService);
   constructor(
     private logger: LoggerService,
     private toastr: ToastrService,
