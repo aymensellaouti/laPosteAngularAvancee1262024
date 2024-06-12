@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Todo } from "../model/todo";
 import { TodoService } from "../service/todo.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-todo",
@@ -11,8 +12,11 @@ import { TodoService } from "../service/todo.service";
 export class TodoComponent {
   todos: Todo[] = [];
   todo = new Todo();
+  acr = inject(ActivatedRoute);
+
   constructor(private todoService: TodoService) {
     this.todos = this.todoService.getTodos();
+    console.log(this.acr.snapshot.data["message"]);
   }
   addTodo() {
     this.todoService.addTodo(this.todo);
