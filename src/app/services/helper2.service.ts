@@ -5,9 +5,9 @@ import { LoggerService } from "./logger.service";
   Merci de les injecter
 */
 @Injectable()
-export class HelperService {
+export class Helper2Service {
   constructor(private logger: LoggerService) {}
   hello() {
-    this.logger.logger("Hello from Helper");
+    this.logger.logger("Hello from Helper 2");
   }
 }

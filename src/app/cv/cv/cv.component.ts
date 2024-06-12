@@ -21,9 +21,10 @@ export class CvComponent {
     private logger: LoggerService,
     private toastr: ToastrService,
     private cvService: CvService,
-    private helperService: HelperService
+    @Inject(HelperService)
+    private helpersService: HelperService[]
   ) {
-    this.helperService.hello();
+    this.helpersService.forEach((helper) => helper.hello());
     this.cvService.getCvs().subscribe({
       next: (cvs) => {
         this.cvs = cvs;

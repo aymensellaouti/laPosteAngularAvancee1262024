@@ -56,7 +56,9 @@ import { LoggerService } from "./services/logger.service";
 import { CONSTANTES } from "../config/const.config";
 import { CvService } from "./cv/services/cv.service";
 import { FakeCvService } from "./cv/services/fakeCv.service";
-
+import { Helper2Service } from "./services/helper2.service";
+import { v4 as uuidv4 } from "uuid";
+// ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,10 +116,21 @@ import { FakeCvService } from "./cv/services/fakeCv.service";
   ],
   providers: [
     AuthInterceptorProvider,
-    HelperService,
+    /* HelperService, */
+    /* LoggerService, */
     {
       provide: CvService,
       useClass: CONSTANTES.env === "dev" ? FakeCvService : CvService,
+    },
+    {
+      provide: HelperService,
+      useClass: HelperService,
+      multi: true,
+    },
+    {
+      provide: HelperService,
+      useClass: Helper2Service,
+      multi: true,
     },
     /* {
       // provide: HELPER_INJECTION_TOKEN,

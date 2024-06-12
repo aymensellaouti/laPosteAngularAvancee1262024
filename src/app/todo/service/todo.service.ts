@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Todo } from '../model/todo';
-import { LoggerService } from '../../services/logger.service';
+import { Injectable } from "@angular/core";
+import { Todo } from "../model/todo";
+import { LoggerService } from "../../services/logger.service";
 
 let n = 1;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TodoService {
   private todos: Todo[] = [];
@@ -27,6 +27,8 @@ export class TodoService {
    *
    */
   addTodo(todo: Todo): void {
+    /* Utiliser la biliothèque uuid */
+    todo.id = "1";
     this.todos.push(todo);
   }
 

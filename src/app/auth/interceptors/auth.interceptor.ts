@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
   HTTP_INTERCEPTORS,
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { HttpHeaders } from '@angular/common/http';
+} from "@angular/common/http";
+import { Observable } from "rxjs";
+import { AuthService } from "../services/auth.service";
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,8 +20,8 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     if (this.authService.isAuthenticated()) {
       const headers = new HttpHeaders().set(
-        'Authorization',
-        localStorage.getItem('token') ?? ''
+        "Authorization",
+        localStorage.getItem("token") ?? ""
       );
       const cloneReq = request.clone({ headers });
       return next.handle(cloneReq);
@@ -33,5 +33,10 @@ export class AuthInterceptor implements HttpInterceptor {
 export const AuthInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
+  /*
+    hé Angular pour le Token HTTP_INTERCEPTORS nous avons
+    plusieurs dépendances donc au lieu d'en avoir une
+    seule tu vas récupérer un tableau de dépendances
+  */
   multi: true,
 };
