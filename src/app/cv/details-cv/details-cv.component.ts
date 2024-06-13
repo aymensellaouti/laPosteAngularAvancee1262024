@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "../../../config/routes.config";
 import { AuthService } from "../../auth/services/auth.service";
-import { switchMap, Observable } from "rxjs";
+import { switchMap, Observable, catchError, EMPTY } from "rxjs";
 
 @Component({
   selector: "app-details-cv",
@@ -17,7 +17,11 @@ export class DetailsCvComponent implements OnInit {
     C'est le flux qui représente le cv associé au paramètre
   */
   cv$: Observable<Cv> = this.activatedRoute.params.pipe(
-    switchMap((params) => this.cvService.getCvById(params["id"]))
+    switchMap((params) => this.cvService.getCvById(params["id"])),
+    catchError((e) => {
+      this.router.navigate([APP_ROUTES.cv]);
+      return EMPTY;
+    })
   );
   constructor(
     private cvService: CvService,
