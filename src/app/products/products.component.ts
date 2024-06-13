@@ -19,6 +19,10 @@ import { Settings } from "./dto/product-settings.dto";
 export class ProductsComponent {
   /* Todo : Faire le nécessaire pour créer le flux des produits à afficher */
   /* Tips : vous pouvez voir les différents imports non utilisés et vous en inspirer */
+  settings: Settings = { limit: 12, skip: 0 };
+  settingsSubject$: BehaviorSubject<Settings> = new BehaviorSubject(
+    this.settings
+  );
   products$!: Observable<Product[]>;
   constructor() {}
 }
