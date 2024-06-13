@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
   BehaviorSubject,
   Observable,
@@ -20,9 +20,24 @@ export class ProductsComponent {
   /* Todo : Faire le nécessaire pour créer le flux des produits à afficher */
   /* Tips : vous pouvez voir les différents imports non utilisés et vous en inspirer */
   settings: Settings = { limit: 12, skip: 0 };
+  productService = inject(ProductService);
   settingsSubject$: BehaviorSubject<Settings> = new BehaviorSubject(
     this.settings
   );
-  products$!: Observable<Product[]>;
-  constructor() {}
+  products$: Observable<Product[]>;
+  constructor() {
+    this.products$ = this.settingsSubject$.pipe(
+      /* setting */
+      concatMap((setting) => this.productService.getProducts(setting)),
+      /* ProductApiResponse */
+      map((productApiResponse) => productApiResponse.products),
+      /* Products */
+      takeWhile((products) => products.length > 0),
+      scan((oldProducts, newProducts) => [...oldProducts, ...newProducts])
+    );
+  }
+  moreProducts() {
+    this.settings.skip += this.settings.limit;
+    this.settingsSubject$.next(this.settings);
+  }
 }
