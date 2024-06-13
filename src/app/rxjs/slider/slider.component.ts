@@ -8,6 +8,7 @@ import { Observable, map, startWith, timer } from "rxjs";
 })
 export class SliderComponent {
   @Input() timer = 1500;
+  @Input() size = 150;
   @Input() imagePaths = [
     "as.jpg",
     "cv.png",

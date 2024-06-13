@@ -8,17 +8,42 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./test-observable.component.css"],
 })
 export class TestObservableComponent {
-  firstObservable$: Observable<number>;
+  name = "Damien";
 
+  firstObservable$: Observable<number>;
   constructor(private toaster: ToastrService) {
     this.firstObservable$ = new Observable((observer) => {
       let i = 5;
-      setInterval(() => {
+      const intervalIndex = setInterval(() => {
         if (!i) {
           observer.complete();
+          clearInterval(intervalIndex);
         }
         observer.next(i--);
       }, 1000);
     });
+
+    this.firstObservable$.subscribe({
+      next: (x) => {
+        console.log(x);
+      },
+    });
+    /*     setTimeout(() => { */
+    this.firstObservable$
+      /* 5 4 3 2 1 */
+      .pipe(
+        map((val) => val * 3)
+        /* 15 12 9 6 3 */
+      )
+      .subscribe({
+        next: (val) => {
+          this.toaster.info("" + val);
+        },
+        complete: () => {
+          this.toaster.warning("Le compte à rebours est terminé !!!!");
+        },
+      });
+    /*     }, 3000);
+     */
   }
 }
