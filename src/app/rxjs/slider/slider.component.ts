@@ -18,5 +18,9 @@ export class SliderComponent {
   ];
 
   /* Todo : Créer le flux permettant de générer les images à afficher dans le slider */
-  paths$!: Observable<string>;
+  paths$: Observable<string> = timer(0, this.timer).pipe(
+    /* 0 1 2 3 4 5 6 7 8 */
+    map((index) => this.imagePaths[index % this.imagePaths.length])
+    /* path1 path2 .... pathn path1 path2 ... pathn */
+  );
 }
