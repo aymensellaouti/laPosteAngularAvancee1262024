@@ -1,6 +1,6 @@
 <ng-container *ngIf="products$ | async as productsList; else loading">
-  <button class="btn btn-primary" (click)="moreProducts()">
-    More Products
+  <button [disabled]="disable" class="btn btn-primary" (click)="moreProducts()">
+    {{ disable ? "No more products" : "More products" }}
   </button>
   <div class="alert alert-warning">
     Product Number: {{ productsList?.length }}

@@ -25,6 +25,7 @@ export class ProductsComponent {
     this.settings
   );
   products$: Observable<Product[]>;
+  disable = false;
   constructor() {
     this.products$ = this.settingsSubject$.pipe(
       /* setting */
@@ -32,7 +33,13 @@ export class ProductsComponent {
       /* ProductApiResponse */
       map((productApiResponse) => productApiResponse.products),
       /* Products */
-      takeWhile((products) => products.length > 0),
+      takeWhile((products) => {
+        if (products.length == 0) {
+          this.disable = true;
+          return false;
+        }
+        return true;
+      }),
       scan((oldProducts, newProducts) => [...oldProducts, ...newProducts])
     );
   }
