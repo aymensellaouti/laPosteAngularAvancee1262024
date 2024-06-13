@@ -16,7 +16,8 @@ export class MasterDetailComponent implements OnInit {
   router = inject(Router);
   acr = inject(ActivatedRoute);
   ngOnInit(): void {
-    this.cvService.getCvs().subscribe({
+    this.cvsList = this.acr.snapshot.data["cvs"];
+    /*    this.cvService.getCvs().subscribe({
       next: (cvs) => {
         this.cvsList = cvs;
       },
@@ -26,7 +27,7 @@ export class MasterDetailComponent implements OnInit {
         Attention!! Les données sont fictives, problème avec le serveur.
         Veuillez contacter l'admin.`);
       },
-    });
+    }); */
   }
   onSelectCv(cv: Cv) {
     this.router.navigate([cv.id], { relativeTo: this.acr });
