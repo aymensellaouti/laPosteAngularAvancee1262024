@@ -3,7 +3,7 @@ import { Cv } from "../model/cv";
 import { LoggerService } from "../../services/logger.service";
 import { ToastrService } from "ngx-toastr";
 import { CvService } from "../services/cv.service";
-import { EMPTY, Observable, catchError, of } from "rxjs";
+import { EMPTY, Observable, catchError, delay, of, retry } from "rxjs";
 import { HELPER_INJECTION_TOKEN } from "../../injection tokens/helper.injection-token";
 import { HelperService } from "../../services/helper.service";
 import { TodoService } from "../../todo/service/todo.service";
@@ -13,17 +13,21 @@ import { TodoService } from "../../todo/service/todo.service";
   styleUrls: ["./cv.component.css"],
 })
 export class CvComponent {
-  selectedCv: Cv | null = null;
+  selectedCv$: Observable<Cv> = this.cvService.selectedCv$;
   /*   selectedCv: Cv | null = null; */
   date = new Date();
   todoService = inject(TodoService);
   cvs$: Observable<Cv[]> = this.cvService.getCvs().pipe(
+    retry({
+      count: 4,
+      delay: 2000,
+    }),
     catchError((e) => {
       this.toastr.error(`
           Attention!! Les données sont fictives, problème avec le serveur.
           Veuillez contacter l'admin.`);
       return of(this.cvService.getFakeCvs());
-    });
+    })
   );
   constructor(
     private logger: LoggerService,
@@ -35,8 +39,5 @@ export class CvComponent {
     this.helpersService.forEach((helper) => helper.hello());
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
-  }
-  onForwardCv(cv: Cv) {
-    this.selectedCv = cv;
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Cv } from "../model/cv";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { API } from "../../../config/api.config";
 
@@ -9,6 +9,17 @@ import { API } from "../../../config/api.config";
 })
 export class CvService {
   private cvs: Cv[] = [];
+
+  private selectCVSubject$: Subject<Cv> = new Subject();
+  public selectedCv$ = this.selectCVSubject$.asObservable();
+  /**
+   *
+   * @param cv Permet de notifier les inscrits qu'un nouveau cv a été
+   * sélctionné
+   */
+  selectCv(cv: Cv) {
+    this.selectCVSubject$.next(cv);
+  }
   constructor(private http: HttpClient) {
     this.cvs = [
       new Cv(1, "aymen", "sellaouti", "teacher", "as.jpg", "1234", 40),

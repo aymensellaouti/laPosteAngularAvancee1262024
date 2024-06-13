@@ -3,7 +3,8 @@ import { CvService } from "../services/cv.service";
 import { ToastrService } from "ngx-toastr";
 import { Cv } from "../model/cv";
 import { ActivatedRoute, Router } from "@angular/router";
-
+import { tap } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 @Component({
   selector: "app-master-detail",
   templateUrl: "./master-detail.component.html",
@@ -15,8 +16,21 @@ export class MasterDetailComponent implements OnInit {
   toastr = inject(ToastrService);
   router = inject(Router);
   acr = inject(ActivatedRoute);
+  constructor() {
+    this.cvService.selectedCv$
+      .pipe(
+        tap((cv) => {
+          console.log({ cv });
+
+          this.router.navigate([cv.id], { relativeTo: this.acr });
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe();
+  }
   ngOnInit(): void {
     this.cvsList = this.acr.snapshot.data["cvs"];
+
     /*    this.cvService.getCvs().subscribe({
       next: (cvs) => {
         this.cvsList = cvs;
@@ -28,8 +42,5 @@ export class MasterDetailComponent implements OnInit {
         Veuillez contacter l'admin.`);
       },
     }); */
-  }
-  onSelectCv(cv: Cv) {
-    this.router.navigate([cv.id], { relativeTo: this.acr });
   }
 }
