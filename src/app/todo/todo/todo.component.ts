@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { selectTodos } from "../store/selector";
+import { todoActionGroup } from "../store/action";
 
 @Component({
   selector: "app-todo",
@@ -22,11 +23,13 @@ export class TodoComponent {
     /* console.log(this.acr.snapshot.data["message"]); */
   }
   addTodo() {
-    this.todoService.addTodo(this.todo);
+    /* this.todoService.addTodo(this.todo); */
+    this.store.dispatch(todoActionGroup.addTodo({ todo: this.todo }));
     this.todo = new Todo();
   }
 
   deleteTodo(todo: Todo) {
-    this.todoService.deleteTodo(todo);
+    this.store.dispatch(todoActionGroup.deleteTodo({ id: todo.id }));
+    /* this.todoService.deleteTodo(todo); */
   }
 }
