@@ -22,7 +22,6 @@ import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { NgstyleComponent } from "./directives/ngstyle/ngstyle.component";
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { NgclassComponent } from "./directives/ngclass/ngclass.component";
-import { TodoComponent } from "./todo/todo/todo.component";
 
 import { HighlightDirective } from "./directives/highlight.directive";
 import { RainbowDirective } from "./directives/rainbow.directive";
@@ -49,19 +48,16 @@ import { ProductsComponent } from "./products/products.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component";
 import { SliderComponent } from "./rxjs/slider/slider.component";
-import { helperProviderFactory } from "./provider factory/helper.provider-factory";
-import { HELPER_INJECTION_TOKEN } from "./injection tokens/helper.injection-token";
 import { HelperService } from "./services/helper.service";
-import { LoggerService } from "./services/logger.service";
 import { CONSTANTES } from "../config/const.config";
 import { CvService } from "./cv/services/cv.service";
 import { FakeCvService } from "./cv/services/fakeCv.service";
 import { Helper2Service } from "./services/helper2.service";
 import { v4 as uuidv4 } from "uuid";
 import { UUID_TOKEN } from "./injection tokens/uuid.inject-token";
-import { WeekTodoComponent } from "./todo/week-todo/week-todo.component";
 import { MasterDetailComponent } from "./cv/master-detail/master-detail.component";
 import { FromOfComponent } from "./rxjs/from-of/from-of.component";
+import { TodoModule } from "./todo/todo.module";
 // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 @NgModule({
   declarations: [
@@ -89,7 +85,6 @@ import { FromOfComponent } from "./rxjs/from-of/from-of.component";
     HighlightDirective,
     RainbowDirective,
     Btc2usdPipe,
-    TodoComponent,
     NavbarComponent,
     FrontComponent,
     AdminComponent,
@@ -102,7 +97,6 @@ import { FromOfComponent } from "./rxjs/from-of/from-of.component";
     RhComponent,
     UserListComponent,
     ProductsComponent,
-    WeekTodoComponent,
     MasterDetailComponent,
     FromOfComponent,
   ],
@@ -111,6 +105,7 @@ import { FromOfComponent } from "./rxjs/from-of/from-of.component";
     FormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    TodoModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -121,6 +116,7 @@ import { FromOfComponent } from "./rxjs/from-of/from-of.component";
       registrationStrategy: "registerWhenStable:30000",
     }),
   ],
+  exports: [],
   providers: [
     AuthInterceptorProvider,
     /* HelperService, */

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Route } from "@angular/router";
+import { RouterModule, Route, Routes } from "@angular/router";
 import { TodoComponent } from "./todo/todo/todo.component";
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { ColorComponent } from "./components/color/color.component";
@@ -18,7 +18,7 @@ import { cvsResolver } from "./cv/resolvers/cvs.resolver";
 import { canLeaveGuard } from "./guards/can-leave.guard";
 import { ProductsComponent } from "./products/products.component";
 
-const routes: Route[] = [
+const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "rh", component: RhComponent },
   { path: "products", component: ProductsComponent },
@@ -40,17 +40,7 @@ const routes: Route[] = [
   {
     path: "",
     component: FrontComponent,
-    children: [
-      {
-        path: "todo",
-        component: TodoComponent,
-        canDeactivate: [canLeaveGuard],
-        resolve: {
-          message: firstResolver,
-        },
-      },
-      { path: "word", component: MiniWordComponent },
-    ],
+    children: [{ path: "word", component: MiniWordComponent }],
   },
   {
     path: "admin",
