@@ -6,7 +6,7 @@ import { TodoComponent } from "./todo/todo.component";
 
 export const TODO_ROUTES: Routes = [
   {
-    path: "todo",
+    path: "",
     component: TodoComponent,
     canDeactivate: [canLeaveGuard],
     resolve: {

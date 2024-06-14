@@ -17,26 +17,16 @@ import { firstResolver } from "./resolvers/first.resolver";
 import { cvsResolver } from "./cv/resolvers/cvs.resolver";
 import { canLeaveGuard } from "./guards/can-leave.guard";
 import { ProductsComponent } from "./products/products.component";
+import { APP_ROUTES } from "../config/routes.config";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "rh", component: RhComponent },
   { path: "products", component: ProductsComponent },
   {
-    path: "cv",
-    component: CvComponent,
+    path: APP_ROUTES.todo,
+    loadChildren: () => import("./todo/todo.module").then((m) => m.TodoModule),
   },
-  /* cv/list */
-  { path: "cv/add", component: AddCvComponent, canActivate: [authGuard] },
-  {
-    path: "cv/list",
-    component: MasterDetailComponent,
-    resolve: {
-      cvs: cvsResolver,
-    },
-    children: [{ path: ":id", component: DetailsCvComponent }],
-  },
-  { path: "cv/:id", component: DetailsCvComponent },
   {
     path: "",
     component: FrontComponent,
