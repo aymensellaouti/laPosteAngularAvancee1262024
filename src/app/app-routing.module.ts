@@ -1,5 +1,10 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Route, Routes } from "@angular/router";
+import {
+  RouterModule,
+  Route,
+  Routes,
+  PreloadAllModules,
+} from "@angular/router";
 
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { ColorComponent } from "./components/color/color.component";
@@ -12,6 +17,7 @@ import { RhComponent } from "./optimizationPattern/rh/rh.component";
 
 import { ProductsComponent } from "./products/products.component";
 import { APP_ROUTES } from "../config/routes.config";
+import { CustomPreloadingStrategy } from "./preloading strategies/cutom.preloading-strategy";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -20,10 +26,6 @@ const routes: Routes = [
   {
     path: APP_ROUTES.todo,
     loadChildren: () => import("./todo/todo.module").then((m) => m.TodoModule),
-  },
-  {
-    path: APP_ROUTES.cv,
-    loadChildren: () => import("./cv/cv.module").then((m) => m.CvModule),
   },
   {
     path: "",
@@ -35,11 +37,22 @@ const routes: Routes = [
     component: AdminComponent,
     children: [{ path: "color", component: ColorComponent }],
   },
+  {
+    path: APP_ROUTES.cv,
+    loadChildren: () => import("./cv/cv.module").then((m) => m.CvModule),
+    data: {
+      preload: true,
+    },
+  },
   { path: "**", component: NF404Component },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: CustomPreloadingStrategy,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
