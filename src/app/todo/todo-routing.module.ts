@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { canLeaveGuard } from "../../guards/can-leave.guard";
-import { firstResolver } from "../../resolvers/first.resolver";
-import { TodoComponent } from "./todo.component";
+import { canLeaveGuard } from "../guards/can-leave.guard";
+import { firstResolver } from "../resolvers/first.resolver";
+import { TodoComponent } from "./todo/todo.component";
 
 export const TODO_ROUTES: Routes = [
   {
