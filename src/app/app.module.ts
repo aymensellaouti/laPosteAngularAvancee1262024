@@ -48,6 +48,14 @@ import { UUID_TOKEN } from "./injection tokens/uuid.inject-token";
 import { FromOfComponent } from "./rxjs/from-of/from-of.component";
 
 import { CvModule } from "./cv/cv.module";
+import { CdPereComponent } from "./cd/cd-pere/cd-pere.component";
+import { CdFilsComponent } from "./cd/cd-fils/cd-fils.component";
+import { UserListElementsComponent } from "./optimizationPattern/user-list-elements/user-list-elements.component";
+import { FiboPipe } from "./optimizationPattern/fibo.pipe";
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { appStateReducer } from "./redux/reducer";
+
 // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 @NgModule({
   declarations: [
@@ -79,6 +87,10 @@ import { CvModule } from "./cv/cv.module";
     ProductsComponent,
 
     FromOfComponent,
+    CdPereComponent,
+    CdFilsComponent,
+    UserListElementsComponent,
+    FiboPipe,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +106,13 @@ import { CvModule } from "./cv/cv.module";
       // or after 30 seconds (whichever comes first).
       registrationStrategy: "registerWhenStable:30000",
     }),
+    StoreModule.forRoot(
+      {
+        ux: appStateReducer,
+      },
+      {}
+    ),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   exports: [],
   providers: [
